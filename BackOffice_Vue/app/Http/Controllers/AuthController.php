@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -14,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('JWT', ['except' => ['login','signup']]);
     }
 
     /**
@@ -33,6 +35,12 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+    function signup(Request $request)
+    {
+        $data = $request->only(['name','email','password']);
+        User::create($data);
+        return $this->login($request);
+    }
     /**
      * Get the authenticated User.
      *

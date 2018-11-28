@@ -8,19 +8,24 @@ use Illuminate\Http\Request;
 
 class LikesController extends Controller
 {
-   function likeIt(Reply $reply)
+    public function __construct()
+    {
+        $this->middleware('JWT');
+    }
+
+    function likeIt(Reply $reply)
    {
        $reply->likes()->create([
-//           'user_id' => auth()->id()
-            'user_id'   => 1
+           'user_id' => auth()->id()
+//            'user_id'   => 1
        ]);
 
    }
 
    function unlikeIt(Reply $reply)
    {
-//       $reply->likes()->where('user_id',auth()->id()) ->first()->delete();
-       $reply->likes()->where('user_id',1)->first()->delete();
+       $reply->likes()->where('user_id',auth()->id()) ->first()->delete();
+//       $reply->likes()->where('user_id',1)->first()->delete();
    }
 
 
