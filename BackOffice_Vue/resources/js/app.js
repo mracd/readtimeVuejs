@@ -24,6 +24,12 @@ Vue.use(Vuetify)
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+
+import User from './Helpers/User'
+window.User = User
+
+User.hasToken()
+
 Vue.component('AppHome', require('./components/AppHome.vue'));
 import router from './Router/router.js'
 
